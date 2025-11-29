@@ -32,7 +32,8 @@
                 <th></th>
                 <th>id</th>
                 <th>name</th>
-                <th>parent_id</th>
+                <th>parent_name</th>
+                <th>products_count</th>
                 <th>status</th>
                 <th>created_at</th>
                 <th>updated_at</th>
@@ -44,8 +45,9 @@
                 <tr>
                     <td><img src="{{ asset('storage/' . $category->image) }}" alt="" width="50" height="50"></td>
                     <td>{{ $category->id }}</td>
-                    <td>{{ $category->name }}</td>
+                    <td><a href="{{ route('dashpoard.categories.show', $category->id) }}">{{ $category->name }}</a></td>
                     <td>{{ $category->parent_name}}</td>
+                    <td>{{ $category->products_number}}</td>
                     <td>{{ $category->status}}</td>
                     <td>{{ $category->created_at }}</td>
                     <td>{{ $category->updated_at }}</td>

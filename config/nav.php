@@ -8,14 +8,14 @@ return [
     [
         'icon'=>'nav-icon fas fa-th',
         'route'=>'dashpoard.categories.index',
-        'title'=>'products',
-        'badge'=>'new',
+        'title'=>'category',
+        // 'badge'=>'new',
     ],
     [
         'icon'=>'nav-icon fas fa-th',
-        'route'=>'dashpoard.categories.create',
-        'title'=>'orders',
-        // 'badge'=>'new',
+        'route'=>'dashpoard.products.index',
+        'title'=>'products',
+        'badge'=>'new',
 
     ],
     

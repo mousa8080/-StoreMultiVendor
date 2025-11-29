@@ -2,18 +2,16 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashpoardController;
+use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\ProductsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-// Auth::routes([
-//     'verify' => true,
-// ]);
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('products', [ProductsController::class, 'index'])->name('products');
+Route::get('product/{product:slug}', [ProductsController::class, 'show'])->name('product.show');
 
 
 Route::middleware('auth')->group(function () {

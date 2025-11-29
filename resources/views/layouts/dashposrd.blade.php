@@ -194,7 +194,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <div class="info">
               {{-- code php run just php code --}}
-              <a href="#" class="d-block"> {{ Auth::user()->name }} </a>
+              <a href="{{ route('dashpoard.profile.edit') }}" class="d-block"> {{ Auth::user()->name }} </a>
             </div>
           </div>
 

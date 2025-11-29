@@ -12,18 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stores', function (Blueprint $table) {
-            
-            $table->id();//=// $table->bigInteger('id')->primary();
-                            // $table->unsignedBigInteger('id')->autoIncrement()->primary();
-                            // $table->bigIncrements('id');
-            $table->string('name',100); 
+
+            $table->id(); //=// $table->bigInteger('id')->primary();
+            // $table->unsignedBigInteger('id')->autoIncrement()->primary();
+            // $table->bigIncrements('id');
+            $table->string('name', 100);
             $table->string('slug')->unique();
-            $table->text('description')->nullable();  
+            $table->text('description')->nullable();
             $table->string('logo')->nullable();
             $table->string('cover')->nullable();
-            $table->enum('status',['active','inactive'])->default('active');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             //created_at and updated_at (timestaps)
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

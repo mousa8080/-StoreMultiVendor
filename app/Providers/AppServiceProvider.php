@@ -22,12 +22,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        Validator::extend('filter', function ($attribute, $value ,$params) {
+        Validator::extend('filter', function ($attribute, $value, $params) {
 
-           return  !in_array(strtolower($value), $params);
-            
+            return  !in_array(strtolower($value), $params);
         }, 'this name is forbidden!');
-        Paginator::useBootstrap(); 
+        Paginator::useBootstrap();
         // Paginator::defaultView('pagination.custom');
     }
 }

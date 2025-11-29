@@ -79,10 +79,12 @@ return [
     */
 
     'locale' => env('APP_LOCALE', 'en'),
+    'currency' => 'USD',
+    '',
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+    'faker_locale' => env('APP_FAKER_LOCALE', 'ar_SA'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,5 +124,10 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+
+    'aliases' => Illuminate\Support\Facades\Facade::defaultAliases()->merge([
+        'Currency' => App\Helpers\Currency::class,
+    ])->toArray(),
 
 ];

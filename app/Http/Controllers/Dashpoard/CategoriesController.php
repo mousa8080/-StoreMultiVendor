@@ -41,12 +41,20 @@ class CategoriesController extends Controller
         //selecta.*,b.name as parent_name from categories left join categoryeis as b on a.id=b.parent_id
         //join  select all from categories as a
 
-        $categories = Category::leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
+        $categories = Category::/*leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
             ->select(['categories.*', 'parents.name as parent_name'])
             ->filter($request->query())
             // ->withTrashed() //come all categories include deleted
             // ->onlyTrashed() //come only deleted categories
-            ->orderBy('categories.name')
+            ->orderBy('categories.name')*/with('parent')
+            // ->select('categories.*')
+            // ->selectRaw('(select count(*) from products where products.category_id=categories.id) as products_count')
+            ->withCount([
+                'products as products_number' => function ($query) {
+                    $query->where('status', 'active');
+                }
+            ])
+            ->filter($request->query())
             ->paginate();
         //Return collection object //paginate difult 15 record.
         // $categories->first(); //Return object
@@ -122,7 +130,11 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {}
+    public function show(Category $category)
+    {
+        $products = $category->products()->with('store')->paginate(5);
+        return view('dashpoard.Categories.show', compact('category', 'products'));
+    }
 
     /**
      * Show the form for editing the specified resource.

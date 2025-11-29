@@ -12,7 +12,7 @@ use Illuminate\Validation\Rules;
 
 class Category extends Model
 {
-    use SoftDeletes,HasFactory;
+    use SoftDeletes, HasFactory;
     protected $fillable = [ // بيتخذن
         'name',
         'slug',
@@ -26,32 +26,48 @@ class Category extends Model
     // 'created_at',
     // 'updated_at',
     // ]; //ممنوع يتخذن
-    public function scopeActive(Builder $query){
-        return $query->where('status','active');
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id', 'id')->withDefault('-');
+    }
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id', 'id');
+    }
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
+    public function scopeActive(Builder $query)
+    {
+        return $query->where('status', 'active');
     }
 
-    public function scopeStatus(Builder $query,$status){
-        return $query->where('status',$status);
+    public function scopeStatus(Builder $query, $status)
+    {
+        return $query->where('status', $status);
     }
-    public function scopeFilter(Builder $query,$filter){
-        $query->when($filter['name']??false,function($query,$value){
-            $query->where('categories.name','like',"%{$value}%");  
+    public function scopeFilter(Builder $query, $filter)
+    {
+        $query->when($filter['name'] ?? false, function ($query, $value) {
+            $query->where('categories.name', 'like', "%{$value}%");
         });
-        $query->when($filter['status']??false,function($query,$value){
-            $query->where('categories.status',$value);
+        $query->when($filter['status'] ?? false, function ($query, $value) {
+            $query->where('categories.status', $value);
         });
         return $query;
     }
-    
+
     public static function rules($id = null)
     {
         return [
-            'name' => ['required',
-                 'string',
-                 'min:3',
-                  'max:255',
+            'name' => [
+                'required',
+                'string',
+                'min:3',
+                'max:255',
                 //   "uniqe:categories,name,$id",
-                   Rule::unique('categories','name')->ignore($id),
+                Rule::unique('categories', 'name')->ignore($id),
                 //    function($attribute,$value,$fail){
                 //     if($value == 'laravel'){
                 //         $fail('this name is forbidden! '.$attribute);
@@ -59,8 +75,8 @@ class Category extends Model
                 //    }
                 'filter:laravel,php',
                 // new Filter(['laravel','php']),// the tow method
-                   
-                ],
+
+            ],
 
             'parent_id' => [
                 'nullable',
