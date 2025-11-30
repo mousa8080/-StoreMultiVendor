@@ -62,7 +62,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $data=$request->except('tags');
+        $data = $request->except('tags');
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');
         }

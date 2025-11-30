@@ -4,11 +4,13 @@ use App\Http\Controllers\DashPoard\ProductController;
 use App\Http\Controllers\Dashpoard\CategoriesController;
 use App\Http\Controllers\Dashpoard\DashpoardController;
 use App\Http\Controllers\Dashpoard\profileContoller;
+use App\Http\Middleware\CheckUserType;
+use App\Http\Middleware\UpdateUserActiveAt;
 use Illuminate\Support\Facades\Route;
 
 
 Route::group([
-    'middleware' => 'auth',
+    'middleware' => ['auth', CheckUserType::class . ':admin,super-admin'],
     'as' => 'dashpoard.',
     'prefix' => 'dashpoard',
     // 'namespace'=>'App\Http\Controllers',
@@ -16,11 +18,11 @@ Route::group([
 ], function () {
     Route::get('/', [DashpoardController::class, 'index'])->name('dashboard');
 
-    
-        Route::get('/profile/edit', [profileContoller::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [profileContoller::class, 'update'])->name('profile.update');
-    
-    
+
+    Route::get('/profile/edit', [profileContoller::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [profileContoller::class, 'update'])->name('profile.update');
+
+
 
     // Custom routes must be BEFORE resource routes to avoid conflicts
     Route::get('/categories/trashed', [CategoriesController::class, 'trashed'])->name('categories.trashed');
