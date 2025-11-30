@@ -9,6 +9,8 @@ use App\Observers\CardObserver;
 class Card extends Model
 {
     public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = [
         'cookie_id',
         'user_id',
