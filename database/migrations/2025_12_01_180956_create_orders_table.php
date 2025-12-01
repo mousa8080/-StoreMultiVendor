@@ -16,6 +16,11 @@ return new class extends Migration
             $table->foreignId('store_id')->constrained('stores');
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('number')->unique();
+            $table->float('shipping')->default(0);
+            $table->float('tax')->default(0);
+            $table->float('discount');
+            $table->float('total');
+            $table->string('payment_method');
             $table->enum('status',['pending','processing','delivered','completed','cancelled','refunded','failed'])->default('pending');
             $table->enum('payment_status',['pending','paid','failed'])->default('pending');
 

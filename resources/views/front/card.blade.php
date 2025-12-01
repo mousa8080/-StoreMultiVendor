@@ -138,8 +138,7 @@
                                                 </li>
                                             </ul>
                                             <div class="button">
-                                                <a href="#" class="btn"
-                                                    onclick="alert('Checkout coming soon!'); return false;">Checkout</a>
+                                                <a href="{{ route('checkout') }}" class="btn">Checkout</a>
                                                 <a href="{{ route('home') }}" class="btn btn-alt">Continue
                                                     shopping</a>
                                             </div>
