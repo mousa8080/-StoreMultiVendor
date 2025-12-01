@@ -53,15 +53,21 @@ class CardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CardRepositories $card)
+    public function update(Request $request, CardRepositories $card, string $id)
     {
         $request->validate([
-            'product_id' => ['required', 'exists:products,id'],
-            'quantity' => ['nullable', 'numeric', 'min:1'],
+            'quantity' => ['required', 'numeric', 'min:1'],
         ]);
-        $product = Product::find($request->post('product_id'));
+
+        $cartItem = \App\Models\Card::findOrFail($id);
+        $product = $cartItem->product;
         $quantity = $request->post('quantity', 1);
         $card->update($product, $quantity);
+
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Cart updated successfully']);
+        }
+
         return redirect()->back()->with('success', 'Product updated to card successfully');
     }
 

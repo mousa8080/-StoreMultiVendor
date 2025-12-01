@@ -13,6 +13,7 @@ class CardObserver
     public function creating(Card $card): void
     {
         $card->id=Str::uuid();
+        $card->cookie_id=$card->getCookieId();
     }
 
     /**

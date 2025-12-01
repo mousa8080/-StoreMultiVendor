@@ -13,17 +13,24 @@ use Illuminate\Support\Facades\Cookie;
 
 class CardModelRepositories implements CardRepositories
 {
+    protected $itmes;
+    public function __construct()
+    {
+        $this->itmes = collect([]);
+    }
     public function get(): Collection
     {
-        return Card::with('product')->where('cookie_id', '=', $this->getCookieId())->get();
+        if (!$this->itmes->count()) {
+            $this->itmes = Card::with('product')->get();
+        }
+        return $this->itmes;
     }
 
     public function add(Product $product, int $quantity): void
     {
-        $item = Card::where('cookie_id', '=', $this->getCookieId())->where('product_id', '=', $product->id)->first();
+        $item = Card::where('product_id', '=', $product->id)->first();
         if (!$item) {
             Card::create([
-                'cookie_id' => $this->getCookieId(),
                 'user_id' => Auth::id(),
                 'product_id' => $product->id,
                 'quantity' => $quantity,
@@ -35,35 +42,26 @@ class CardModelRepositories implements CardRepositories
 
     public function update(Product $product, int $quantity): void
     {
-        Card::where('product_id', '=', $product->id)->where('cookie_id', '=', $this->getCookieId())->update([
+        Card::where('product_id', '=', $product->id)->update([
             'quantity' => $quantity,
         ]);
     }
 
     public function delete($id): void
     {
-        Card::where('id', '=', $id)->where('cookie_id', '=', $this->getCookieId())->delete();
+        Card::where('id', '=', $id)->delete();
+        // $this->itmes = $this->itmes->reject(fn($item) => $item->id == $id);
     }
 
-    public function total(): int
+    public function total(): float
     {
-        return Card::where('cookie_id', '=', $this->getCookieId())->join('products', 'products.id', '=', 'cards.product_id')->selectRaw('sum(products.price * cards.quantity) as total')->value('total');
+
+        //return Card::join('products', 'products.id', '=', 'cards.product_id')->selectRaw('sum(products.price * cards.quantity) as total')->value('total');
+        return $this->get()->sum('product.price * quantity');
     }
 
     public function empty(): void
     {
-
-        Card::where('cookie_id', '=', $this->getCookieId())->delete();
-    }
-
-    protected function getCookieId()
-    {
-        $cookie_id = Cookie::get('card_id');
-        if (!$cookie_id) {
-            $cookie_id = Str::uuid();
-            Cookie::queue('card_id', $cookie_id, 60 * 60 * 24 * 30);
-        }
-
-        return $cookie_id;
+        Card::query()->delete();
     }
 }

@@ -81,7 +81,8 @@
                                         @method('PUT')
                                         <input type="hidden" name="product_id" value="{{ $item->product_id }}">
                                         <div class="input-group">
-                                            <input type="number" name="quantity" class="form-control"
+                                            <input type="number" name="quantity" class="form-control item-quantity"
+                                            data-id="{{ $item->id }}"
                                                 value="{{ $item->quantity }}" min="1" style="max-width: 80px;">
                                             <button type="submit" class="btn btn-sm btn-primary ms-1">
                                                 <i class="lni lni-checkmark"></i>
@@ -127,10 +128,13 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-12">
                                         <div class="right">
+                                            @php
+                                                $total = $card->total();
+                                            @endphp
                                             <ul>
-                                                <li>Cart Subtotal<span>${{ number_format($card->total(), 2) }}</span></li>
+                                                <li>Cart Subtotal<span>${{ number_format($total, 2) }}</span></li>
                                                 <li>Shipping<span>Free</span></li>
-                                                <li class="last">You Pay<span>${{ number_format($card->total(), 2) }}</span>
+                                                <li class="last">You Pay<span>${{ number_format($total, 2) }}</span>
                                                 </li>
                                             </ul>
                                             <div class="button">
@@ -151,7 +155,7 @@
                         <i class="lni lni-cart" style="font-size: 80px; color: #ddd;"></i>
                         <h3 class="mt-3">Your cart is empty</h3>
                         <p class="text-muted">Looks like you haven't added anything to your cart yet</p>
-                        <a href="#" class="btn btn-primary mt-3">
+                        <a href="{{ route('home') }}" class="btn btn-primary mt-3">
                             Continue Shopping
                         </a>
                     </div>
@@ -285,4 +289,11 @@
             }
         }
     </style>
+    @push('scripts')
+    <script>
+        const csrf_token = "{{ csrf_token() }}";
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    @vite('resources/js/card.js')
+    @endpush
 </x-front-layout>
