@@ -21,13 +21,11 @@ return new class extends Migration
             $table->float('discount');
             $table->float('total');
             $table->string('payment_method');
-            $table->enum('status',['pending','processing','delivered','completed','cancelled','refunded','failed'])->default('pending');
-            $table->enum('payment_status',['pending','paid','failed'])->default('pending');
+            $table->enum('status', ['pending', 'processing', 'delivered', 'completed', 'cancelled', 'refunded', 'failed'])->default('pending');
+            $table->enum('payment_status', ['pending', 'paid', 'failed'])->default('pending');
 
             $table->timestamps();
         });
-
-
     }
 
     /**

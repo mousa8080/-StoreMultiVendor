@@ -14,6 +14,10 @@ class Order extends Model
         'payment_method',
         'status',
         'payment_status',
+        'shipping',
+        'tax',
+        'discount',
+        'total',
     ];
     public function store()
     {
@@ -34,6 +38,11 @@ class Order extends Model
                 'quantity',
                 'options'
             ]);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class, 'order_id');
     }
 
     public function addresses()

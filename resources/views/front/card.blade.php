@@ -20,13 +20,6 @@
     <!-- Shopping Cart -->
     <div class="shopping-cart section">
         <div class="container">
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="lni lni-checkmark-circle"></i> {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
             <div class="cart-list-head">
                 @if($card->get()->count() > 0)
                     <!-- Cart List Title -->

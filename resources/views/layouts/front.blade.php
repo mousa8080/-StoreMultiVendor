@@ -158,7 +158,7 @@
                                         <span class="total-items">0</span>
                                     </a>
                                 </div>
-                                <x-card-minue/>
+                                <x-card-minue />
                             </div>
                         </div>
                     </div>
@@ -289,6 +289,39 @@
         <!-- End Header Bottom -->
     </header>
     <!-- End Header Area -->
+
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="lni lni-checkmark-circle"></i> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="lni lni-close"></i> {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('warning'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="lni lni-warning"></i> {{ session('warning') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('info'))
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <i class="lni lni-information"></i> {{ session('info') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+    </div>
+    <!-- End Flash Messages -->
+
     {{ $breadcrumb ?? '' }}
     {{ $content ?? '' }}
     {{ $slot }}

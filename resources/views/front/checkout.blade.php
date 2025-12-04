@@ -197,6 +197,9 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        @error('payment_method')
+                                            <div class="text-danger mt-2">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

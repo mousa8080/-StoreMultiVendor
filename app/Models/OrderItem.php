@@ -10,6 +10,15 @@ class OrderItem extends Pivot
     public $incrementing = true;
     public $timestamps = false;
 
+    protected $fillable = [
+        'order_id',
+        'product_id',
+        'product_name',
+        'price',
+        'quantity',
+        'options',
+    ];
+
     public function product()
     {
         return $this->belongsTo(Product::class)
