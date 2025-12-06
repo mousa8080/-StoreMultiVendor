@@ -4,6 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
+/**
+ * @property int $id
+ * @property int $order_id
+ * @property int|null $product_id
+ * @property string $product_name
+ * @property float $price
+ * @property int $quantity
+ * @property string|null $options
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\OrderAddress> $addresses
+ * @property-read int|null $addresses_count
+ * @property-read \App\Models\OrderAddress|null $billing_address
+ * @property-read \App\Models\Order $order
+ * @property-read \App\Models\Product|null $product
+ * @property-read \App\Models\OrderAddress|null $shipping_address
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem whereOptions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem whereProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem whereProductName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem whereQuantity($value)
+ * @mixin \Eloquent
+ */
 class OrderItem extends Pivot
 {
     protected $table = 'order_items';

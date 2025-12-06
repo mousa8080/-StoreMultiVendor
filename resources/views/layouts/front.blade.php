@@ -86,18 +86,36 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
-                            <div class="user">
-                                <i class="lni lni-user"></i>
-                                Hello
-                            </div>
-                            <ul class="user-login">
-                                <li>
-                                    <a href="login.html">Sign In</a>
-                                </li>
-                                <li>
-                                    <a href="register.html">Register</a>
-                                </li>
-                            </ul>
+                            @auth
+                                <div class="user">
+                                    <i class="lni lni-user"></i>
+                                    Hello, {{ Auth::user('web')->name }} 
+                                </div>
+                                <ul class="user-login">
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                            @csrf
+                                            <button type="submit"
+                                                style="background:none;border:none;cursor:pointer;color:#3167eb;padding:0;font:inherit;">
+                                                Logout
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            @else
+                                <div class="user">
+                                    <i class="lni lni-user"></i>
+                                    Hello
+                                </div>
+                                <ul class="user-login">
+                                    <li>
+                                        <a href="{{ route('login') }}">Sign In</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('register') }}">Register</a>
+                                    </li>
+                                </ul>
+                            @endauth
                         </div>
                     </div>
                 </div>

@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group([
-    'middleware' => ['auth', CheckUserType::class . ':admin,super-admin'],
+    'middleware' => ['auth:admin'],
     'as' => 'dashpoard.',
-    'prefix' => 'dashpoard',
+    'prefix' => 'admin/dashpoard',
     // 'namespace'=>'App\Http\Controllers',
 
 ], function () {

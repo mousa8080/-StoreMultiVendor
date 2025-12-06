@@ -8,6 +8,30 @@ use App\Observers\CardObserver;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cookie;
 
+/**
+ * @property string $id
+ * @property string $cookie_id
+ * @property int|null $user_id
+ * @property int $product_id
+ * @property int $quantity
+ * @property string|null $options
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Product $product
+ * @property-read \App\Models\User|null $user
+ * @method static Builder<static>|Card newModelQuery()
+ * @method static Builder<static>|Card newQuery()
+ * @method static Builder<static>|Card query()
+ * @method static Builder<static>|Card whereCookieId($value)
+ * @method static Builder<static>|Card whereCreatedAt($value)
+ * @method static Builder<static>|Card whereId($value)
+ * @method static Builder<static>|Card whereOptions($value)
+ * @method static Builder<static>|Card whereProductId($value)
+ * @method static Builder<static>|Card whereQuantity($value)
+ * @method static Builder<static>|Card whereUpdatedAt($value)
+ * @method static Builder<static>|Card whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Card extends Model
 {
     public $incrementing = false;

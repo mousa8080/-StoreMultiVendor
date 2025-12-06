@@ -10,6 +10,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
+/**
+ * @property int $id
+ * @property int|null $parent_id
+ * @property string $name
+ * @property string $slug
+ * @property string|null $description
+ * @property string|null $image
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $children
+ * @property-read int|null $children_count
+ * @property-read Category|null $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $products
+ * @property-read int|null $products_count
+ * @method static Builder<static>|Category active()
+ * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Category filter($filter)
+ * @method static Builder<static>|Category newModelQuery()
+ * @method static Builder<static>|Category newQuery()
+ * @method static Builder<static>|Category onlyTrashed()
+ * @method static Builder<static>|Category query()
+ * @method static Builder<static>|Category status($status)
+ * @method static Builder<static>|Category whereCreatedAt($value)
+ * @method static Builder<static>|Category whereDeletedAt($value)
+ * @method static Builder<static>|Category whereDescription($value)
+ * @method static Builder<static>|Category whereId($value)
+ * @method static Builder<static>|Category whereImage($value)
+ * @method static Builder<static>|Category whereName($value)
+ * @method static Builder<static>|Category whereParentId($value)
+ * @method static Builder<static>|Category whereSlug($value)
+ * @method static Builder<static>|Category whereStatus($value)
+ * @method static Builder<static>|Category whereUpdatedAt($value)
+ * @method static Builder<static>|Category withTrashed(bool $withTrashed = true)
+ * @method static Builder<static>|Category withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Category extends Model
 {
     use SoftDeletes, HasFactory;

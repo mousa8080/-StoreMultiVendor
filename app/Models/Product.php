@@ -10,6 +10,57 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Scopes\StoreScope;
 use Illuminate\Support\Str;
 
+/**
+ * @property int $id
+ * @property int $store_id
+ * @property int|null $category_id
+ * @property string $name
+ * @property string $slug
+ * @property string|null $description
+ * @property string|null $image
+ * @property string $price
+ * @property int $quantity
+ * @property string|null $compare_price
+ * @property string|null $options
+ * @property string $rating
+ * @property int $featured
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Category|null $category
+ * @property-read mixed $discount_percentage
+ * @property-read mixed $image_url
+ * @property-read \App\Models\Store $store
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
+ * @property-read int|null $tags_count
+ * @method static Builder<static>|Product active()
+ * @method static \Database\Factories\ProductFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Product newModelQuery()
+ * @method static Builder<static>|Product newQuery()
+ * @method static Builder<static>|Product onlyTrashed()
+ * @method static Builder<static>|Product query()
+ * @method static Builder<static>|Product whereCategoryId($value)
+ * @method static Builder<static>|Product whereComparePrice($value)
+ * @method static Builder<static>|Product whereCreatedAt($value)
+ * @method static Builder<static>|Product whereDeletedAt($value)
+ * @method static Builder<static>|Product whereDescription($value)
+ * @method static Builder<static>|Product whereFeatured($value)
+ * @method static Builder<static>|Product whereId($value)
+ * @method static Builder<static>|Product whereImage($value)
+ * @method static Builder<static>|Product whereName($value)
+ * @method static Builder<static>|Product whereOptions($value)
+ * @method static Builder<static>|Product wherePrice($value)
+ * @method static Builder<static>|Product whereQuantity($value)
+ * @method static Builder<static>|Product whereRating($value)
+ * @method static Builder<static>|Product whereSlug($value)
+ * @method static Builder<static>|Product whereStatus($value)
+ * @method static Builder<static>|Product whereStoreId($value)
+ * @method static Builder<static>|Product whereUpdatedAt($value)
+ * @method static Builder<static>|Product withTrashed(bool $withTrashed = true)
+ * @method static Builder<static>|Product withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Product extends Model
 {
     use SoftDeletes, HasFactory;
