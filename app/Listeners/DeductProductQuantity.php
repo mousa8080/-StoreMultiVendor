@@ -23,13 +23,20 @@ class DeductProductQuantity
      */
     public function handle(OrderCreate $order): void
     {
-        foreach ($order->order->products as $product) {
-            $product->decrement('quantity', $product->pivot->quantity);
-        }
 
-        // foreach (Card::get() as $item) {
-        //     $item->product->quantity -= $item->quantity;
-        //     $item->product->save();
-        // }
+        foreach ($order->order->products as $product) {
+            // Check if product has sufficient quantity before decrementing
+            if ($product->quantity >= $product->pivot->quantity) {
+                $product->decrement('quantity', $product->pivot->quantity);
+            }
+            // If insufficient quantity, we could log this or handle it differently
+            // For now, we just skip decrementing to prevent negative values
+
+            // foreach (Card::get() as $item) {
+            //     $item->product->quantity -= $item->quantity;
+            //     $item->product->save();
+            // }
+
+        }
     }
 }

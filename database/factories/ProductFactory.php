@@ -19,7 +19,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->productName();
+        $name = fake()->unique()->productName();
         return [
             'name' => $name,
             'slug' => Str::slug($name),

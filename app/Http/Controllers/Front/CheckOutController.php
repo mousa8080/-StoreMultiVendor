@@ -95,7 +95,10 @@ class CheckOutController extends Controller
                 // إضافة Order للمصفوفة
                 $orders[] = $order;
             }
+
+            // Empty cart after successful order creation
             $card->empty();
+
             DB::commit();
 
             // إطلاق Event لكل order

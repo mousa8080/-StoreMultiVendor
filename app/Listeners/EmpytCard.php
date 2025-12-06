@@ -22,6 +22,6 @@ class EmpytCard
      */
     public function handle(): void
     {
-        // Card::empty( );
+        Card::empty( );
     }
 }

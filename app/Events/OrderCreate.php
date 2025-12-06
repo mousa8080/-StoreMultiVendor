@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderCreate
+class OrderCreate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -32,8 +32,27 @@ class OrderCreate
      */
     public function broadcastOn(): array
     {
+        // Find the user who owns this store to send them the notification
+        $user = User::where('store_id', $this->order->store_id)->first();
+
+        if ($user) {
+            return [
+                new PrivateChannel('App.User.' . $user->id),
+            ];
+        }
+
+        return [];
+    }
+
+    public function broadcastWith(): array
+    {
+        $addr = $this->order->billingAddress;
         return [
-            new PrivateChannel('channel-name'),
+            'order_id' => $this->order->id,
+            'order_number' => $this->order->number,
+            'message' => "طلب جديد #{$this->order->number} من {$addr->name}",
+            'total' => $this->order->total,
+            'customer_name' => $addr->name,
         ];
     }
 }
