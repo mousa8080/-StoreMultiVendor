@@ -8,6 +8,7 @@ use App\Http\Controllers\Front\CardController;
 use App\Http\Controllers\Front\CheckOutController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Front\Auth\TowFactorAuthenticationController;
 
 
 
@@ -24,6 +25,7 @@ Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.up
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
+Route::get('/auth/user/2fa', [TowFactorAuthenticationController::class, 'showTwoFactorAuthenticationForm'])->name('front.auth.2fa');
 
 // require __DIR__ . '/auth.php';
 require __DIR__ . '/dashpoard.php';
