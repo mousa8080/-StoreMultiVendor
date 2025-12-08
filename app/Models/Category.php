@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Str;
+
+
 
 /**
  * @property int $id
@@ -58,6 +61,15 @@ class Category extends Model
         'discription',
         'image',
         'status',
+    ];
+    protected $hidden = [
+        'image',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+    protected $appends = [
+        'image_url'
     ];
     // protected $guarded = [
     // 'id',
@@ -130,5 +142,28 @@ class Category extends Model
             ],
             'status' => 'in:active,archived',
         ];
+    }
+    public static function booted()
+    {
+        static::creating(
+            function (Category $category) {
+                $category->slug = Str::slug($category->name);
+            }
+        );
+        static::updating(
+            function (Category $category) {
+                $category->slug = Str::slug($category->name);
+            }
+        );
+    }
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image) {
+            return "https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=";
+        }
+        if (!Str::startsWith($this->image, 'http://') && !Str::startsWith($this->image, 'https://')) {
+            return asset('storage/' . $this->image);
+        }
+        return asset('storage/' . $this->image);
     }
 }

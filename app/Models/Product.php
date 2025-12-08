@@ -127,7 +127,7 @@ class Product extends Model
             return asset('storage/' . $this->image);
         }
         return asset('storage/' . $this->image);
-    }
+    }      
     public function getDiscountPercentageAttribute()
     {
         if ($this->compare_price) {
