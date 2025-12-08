@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -79,10 +80,25 @@ class Product extends Model
         'featured',
         'status',
     ];
+    protected $hidden = [
+        'image',
+        'deleted_at',
+        'created_at',
+        'updated_at',
+
+    ];
+    protected $appends = [
+        'image_url',
+    ];
 
     protected  static function booted()
     {
         static::addGlobalScope('store', new StoreScope());
+        static::creating(
+            function (Product $product) {
+                $product->slug = Str::slug($product->name);
+            }
+        );
     }
     public function category()
     {
@@ -104,13 +120,13 @@ class Product extends Model
     }
     public function getImageUrlAttribute()
     {
-        if ($this->image) {
+        if (!$this->image) {
             return "https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=";
         }
-        // if(Str::startsWith($this->image, 'http://') || Str::startsWith($this->image, 'https://')){
-        //     return $this->image;
-        // }
-        // return asset('storage/' . $this->image);
+        if (!Str::startsWith($this->image, 'http://') && !Str::startsWith($this->image, 'https://')) {
+            return asset('storage/' . $this->image);
+        }
+        return asset('storage/' . $this->image);
     }
     public function getDiscountPercentageAttribute()
     {
@@ -118,5 +134,29 @@ class Product extends Model
             return round((($this->compare_price - $this->price) / $this->compare_price) * 100);
         }
         return 0;
+    }
+
+    public function scopeFilter(Builder $builder, array $filter)
+    {
+        $options = array_merge([
+            'store_id' => null,
+            'category_id' => null,
+            'tag_id' => null,
+        ], $filter);
+
+        $builder->when($options['store_id'], function (Builder $builder) use ($options) {
+            $builder->where('store_id', $options['store_id']);
+        });
+        $builder->when($options['category_id'], function (Builder $builder) use ($options) {
+            $builder->where('category_id', $options['category_id']);
+        });
+        // $builder->whereExists(function ($query) use ($options) {
+        //     $query->selectRaw('1')
+        //         ->from('products_tag')
+        //         ->whereColumn('products_tag.product_id', 'products.id')
+        //         ->when($options['tag_id'], function ($query) use ($options) {
+        //             $query->where('products_tag.tag_id', $options['tag_id']);
+        //         });
+        // });
     }
 }
