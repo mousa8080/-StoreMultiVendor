@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\TagController;
+use App\Http\Controllers\Api\Auth\LoginUserController;
+use App\Http\Controllers\Api\Auth\RegesterUserController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -26,3 +28,6 @@ Route::apiResource('/cards', CardController::class);
 Route::apiResource('/profiles', ProfileController::class);
 Route::apiResource('/stores', StoreController::class);
 Route::apiResource('/tags', TagController::class);
+Route::post('/login', [LoginUserController::class, 'login'])->middleware('guest:sanctum');
+Route::post('/register', [RegesterUserController::class, 'register'])->middleware('guest:sanctum');
+Route::post('/logout', [LoginUserController::class, 'logout'])->middleware('auth:sanctum');
