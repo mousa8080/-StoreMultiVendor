@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index','show');
+        $this->middleware('auth:sanctum')->except('index', 'show');
     }
     /**
      * Display a listing of the resource.
@@ -43,6 +45,15 @@ class ProductController extends Controller
             'status' => 'nullable|string|in:active,inactive',
 
         ]);
+
+        $user = $request->user();
+        if (!$user->tokenCan('products.create')) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
         $product = Product::create($request->all());
         return response()->json($product, 201);
     }
@@ -74,7 +85,16 @@ class ProductController extends Controller
             'rating' => 'nullable|numeric',
             'featured' => 'nullable|boolean',
             'status' => 'nullable|string|in:active,inactive',
+            'abilities' => 'sometimes|array'
         ]);
+
+        $user = $request->user();
+        if (!$user->tokenCan('products.update')) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 403);
+        }
 
         $product->update($request->all());
 
@@ -86,6 +106,14 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $user = auth()->guard('sanctum')->user();
+        if (!$user->tokenCan('products.delete')) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
         $product->delete();
 
         return response()->json(['message' => 'Product deleted successfully'], 200);
