@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\UpdateUserActiveAt;
 use App\Http\Middleware\MarkNotificationAsRead;
+use App\Http\Middleware\CheckApiToken;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,6 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web([
             UpdateUserActiveAt::class,
             MarkNotificationAsRead::class,
+        ]);
+        $middleware->api([
+            CheckApiToken::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
