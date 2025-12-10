@@ -44,6 +44,9 @@ class Card extends Model
         'quantity',
         'options',
     ];
+    protected $hidden = [
+        'cookie_id',
+    ];
     public static function getCookieId()
     {
         $cookie_id = Cookie::get('card_id');

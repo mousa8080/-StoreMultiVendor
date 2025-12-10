@@ -14,7 +14,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = Profile::with('user')->paginate();
+        $profiles = Profile::with('user:id,email')->paginate();
         return response()->json(ProfileResource::collection($profiles), 200);
     }
 
@@ -24,23 +24,23 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id|unique:profiles,user_id',
+            'user_id' => 'unique:profiles|required|exists:users,id',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'street_address' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:100',
-            'state' => 'nullable|string|max:100',
-            'country' => 'nullable|string|max:100',
-            'postal_code' => 'nullable|string|max:20',
-            'locale' => 'nullable|string|max:10',
-            'gender' => 'nullable|string|in:male,female,other',
-            'birth_date' => 'nullable|date',
+            'phone' => 'required|string|max:20',
+            'street_address' => 'required|string|max:255',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:100',
+            'country' => 'required|string|max:100',
+            'postal_code' => 'required|string|max:20',
+            'locale' => 'required|string|max:10',
+            'gender' => 'required|string|in:male,female,other',
+            'birth_date' => 'required|date',
         ]);
 
         $profile = Profile::create($request->all());
 
-        return response()->json(new ProfileResource($profile), 201);
+        return response()->json($profile, 201);
     }
 
     /**
@@ -57,17 +57,18 @@ class ProfileController extends Controller
     public function update(Request $request, Profile $profile)
     {
         $request->validate([
+            'user_id' => 'sometimes|unique:profiles|sometimes|exists:users,id',
             'first_name' => 'sometimes|string|max:255',
             'last_name' => 'sometimes|string|max:255',
-            'phone' => 'nullable|string|max:20',
-            'street_address' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:100',
-            'state' => 'nullable|string|max:100',
-            'country' => 'nullable|string|max:100',
-            'postal_code' => 'nullable|string|max:20',
-            'locale' => 'nullable|string|max:10',
-            'gender' => 'nullable|string|in:male,female,other',
-            'birth_date' => 'nullable|date',
+            'phone' => 'sometimes|string|max:20',
+            'street_address' => 'sometimes|string|max:255',
+            'city' => 'sometimes|string|max:100',
+            'state' => 'sometimes|string|max:100',
+            'country' => 'sometimes|string|max:100',
+            'postal_code' => 'sometimes|string|max:20',
+            'locale' => 'sometimes|string|max:10',
+            'gender' => 'sometimes|string|in:male,female,other',
+            'birth_date' => 'sometimes|date',
         ]);
 
         $profile->update($request->all());

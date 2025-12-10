@@ -19,16 +19,16 @@ class CardResource extends JsonResource
             'user_id' => $this->user_id,
             'quantity' => $this->quantity,
             'options' => $this->options,
-            'product' => [
+            'product' => $this->product ? [
                 'id' => $this->product->id,
                 'name' => $this->product->name,
                 'price' => $this->product->price,
                 'image' => $this->product->image_url,
-            ],
-            'user' => [
-                'id' => $this->user->id ?? null,
+            ] : null,
+            'user' => $this->user ? [
+                'id' => $this->user->id,
                 'name' => $this->user->name,
-            ],
+            ] : null,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -30,4 +30,17 @@ class Tag extends Model
     {
         return $this->belongsToMany(Product::class, 'products_tag', 'tag_id', 'product_id', 'id', 'id');
     }
+    protected static function booted()
+    {
+        static::creating(function (Tag $tag) {
+            if (empty($tag->slug)) {
+                $tag->slug = \Str::slug($tag->name);
+            }
+        });
+        static::updating(function (Tag $tag) {
+            if ($tag->isDirty('name')) {
+                $tag->slug = \Str::slug($tag->name);
+            }
+        });
+    }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -44,16 +45,30 @@ use Illuminate\Notifications\Notifiable;
  */
 class Store extends Model
 {
-        use SoftDeletes, HasFactory,Notifiable;
-        protected $connection='mysql';
-        protected $table='stores';
-        protected $primaryKey='id';
-        public $incrementing =true; //is just public
-        public $timestamps=true; //is just public
+        use SoftDeletes, HasFactory, Notifiable;
+        protected $connection = 'mysql';
+        protected $table = 'stores';
+        protected $primaryKey = 'id';
+        public $incrementing = true; //is just public
+        public $timestamps = true; //is just public
+        protected $fillable = [
+                'name',
+                'slug',
+                'description',
+                'logo',
+                'cover',
+                'status',
+        ];
 
-        public function products(){
+        public function products()
+        {
 
                 return $this->hasMany(Product::class, 'store_id', 'id');
         }
-        
+        protected static function booted(): void
+        {
+                static::creating(function (Store $store) {
+                        $store->slug = Str::slug($store->name);
+                });
+        }
 }

@@ -15,7 +15,7 @@ class CardController extends Controller
     public function index()
     {
         $cards = Card::all();
-        return response()->json(CardResource::collection($cards), 200);
+        return response()->json($cards, 200);
     }
 
     /**
@@ -24,20 +24,17 @@ class CardController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|exists:products,id',
+            'cookie_id' => 'nullable|string',
+            'user_id' => 'nullable|integer|exists:users,id',
+            'product_id' => 'required|integer|exists:products,id',
             'quantity' => 'required|integer|min:1',
             'options' => 'nullable|string',
+
         ]);
 
-        $card = Card::create([
-            'cookie_id' => Card::getCookieId(),
-            'user_id' => $request->user_id,
-            'product_id' => $request->product_id,
-            'quantity' => $request->quantity,
-            'options' => $request->options,
-        ]);
+        $card = Card::create($request->all());
 
-        return response()->json(new CardResource($card->load('product', 'user')), 201);
+        return response()->json($card, 201);
     }
 
     /**
@@ -45,7 +42,7 @@ class CardController extends Controller
      */
     public function show(Card $card)
     {
-        return response()->json(new CardResource($card->load('product', 'user')), 200);
+        return response()->json($card, 200);
     }
 
     /**
@@ -60,7 +57,7 @@ class CardController extends Controller
 
         $card->update($request->only(['quantity', 'options']));
 
-        return response()->json(new CardResource($card->load('product', 'user')), 200);
+        return response()->json($card, 200);
     }
 
     /**

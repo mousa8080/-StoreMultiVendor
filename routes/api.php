@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\Auth\RegesterUserController;
+use App\Http\Controllers\Api\Auth\LoginAdminController;
+use App\Http\Controllers\Api\Auth\RegisterAdminController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -31,3 +33,5 @@ Route::apiResource('/tags', TagController::class);
 Route::post('/login', [LoginUserController::class, 'login'])->middleware('guest:sanctum');
 Route::post('/register', [RegesterUserController::class, 'register'])->middleware('guest:sanctum');
 Route::post('/logout', [LoginUserController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/admin/login', [LoginAdminController::class, 'loginAdmin'])->middleware('guest:sanctum');
+Route::post('/admin/register', [RegisterAdminController::class, 'register'])->middleware('guest:sanctum');

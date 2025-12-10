@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             MarkNotificationAsRead::class,
         ]);
         $middleware->api([
-            CheckApiToken::class,
+            // CheckApiToken::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

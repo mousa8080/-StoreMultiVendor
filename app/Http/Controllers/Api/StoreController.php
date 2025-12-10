@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\StoreResource;
 
 class StoreController extends Controller
+
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +25,7 @@ class StoreController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'unique:stores|required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:stores,slug',
             'description' => 'nullable|string',
             'logo' => 'nullable|image',

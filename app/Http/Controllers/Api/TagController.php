@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Resources\TagResource;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
@@ -23,9 +24,12 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
+        $slug = Str::slug($request->name);
+        $request->merge(['slug' => $slug]);
+
         $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:tags,slug',
+            'name' => 'required|string|max:255|unique:tags,name',
+            'slug' => 'required|string|max:255|unique:tags,slug',
         ]);
 
         $tag = Tag::create($request->all());
@@ -49,7 +53,7 @@ class TagController extends Controller
     {
         $request->validate([
             'name' => 'sometimes|string|max:255',
-            'slug' => 'sometimes|string|max:255|unique:tags,slug,' . $tag->id,
+            'slug' => 'sometimes|string|max:255|unique:tags,slug,',
         ]);
 
         $tag->update($request->all());
