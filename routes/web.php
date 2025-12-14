@@ -9,10 +9,10 @@ use App\Http\Controllers\Front\CheckOutController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Front\Auth\TowFactorAuthenticationController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::group(['prefix' =>LaravelLocalization::setLocale()], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('products', [ProductsController::class, 'index'])->name('products');
 Route::get('product/{product:slug}', [ProductsController::class, 'show'])->name('product.show');
 Route::resource('card', CardController::class);
@@ -26,6 +26,9 @@ Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.
 
 
 Route::get('/auth/user/2fa', [TowFactorAuthenticationController::class, 'showTwoFactorAuthenticationForm'])->name('front.auth.2fa');
+Route::post('/currency/convert', [\App\Http\Controllers\Front\CurrencyConverterController::class, 'convert'])->name('currency.convert');
+});
+
 
 // require __DIR__ . '/auth.php';
 require __DIR__ . '/dashpoard.php';

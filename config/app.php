@@ -82,7 +82,7 @@ return [
     'currency' => 'USD',
     'api_key' => env('API_TOKEN'),
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'ar'),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'ar_SA'),
 
