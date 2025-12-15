@@ -1,61 +1,206 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Multi-Vendor E-Commerce Store
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern multi-vendor e-commerce platform built with Laravel 12, featuring real-time notifications, multi-language support, and a comprehensive admin panel.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Multi-Vendor System**: Support for multiple stores/vendors
+- **Product Management**: Categories, products, tags, and inventory management
+- **Order Management**: Complete order processing system with order tracking
+- **Shopping Cart**: User-friendly shopping cart functionality
+- **User Authentication**: Secure authentication using Laravel Fortify
+- **Admin Panel**: Comprehensive admin dashboard for managing stores, products, and orders
+- **Real-time Notifications**: Pusher integration for real-time updates
+- **Multi-Language Support**: Built-in localization support
+- **Responsive Design**: Modern UI with TailwindCSS and Alpine.js
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Backend
+- **Laravel 12** - PHP Framework
+- **Laravel Fortify** - Authentication
+- **Laravel Sanctum** - API Authentication
+- **Pusher** - Real-time Broadcasting
 
-## Learning Laravel
+### Frontend
+- **TailwindCSS** - CSS Framework
+- **Alpine.js** - JavaScript Framework
+- **Vite** - Build Tool
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Development Tools
+- **Laravel Breeze** - Authentication Scaffolding
+- **Laravel Debugbar** - Debugging Tool
+- **Laravel IDE Helper** - IDE Autocompletion
+- **Pest PHP** - Testing Framework
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Requirements
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- MySQL/SQLite Database
 
-## Laravel Sponsors
+## Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Clone the repository
+```bash
+git clone <repository-url>
+cd STORE
+```
 
-### Premium Partners
+### 2. Install Dependencies
+```bash
+composer install
+npm install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 3. Environment Configuration
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+### 4. Database Configuration
+Update your `.env` file with database credentials:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 5. Run Migrations and Seeders
+```bash
+php artisan migrate:fresh --seed
+```
 
-## Code of Conduct
+### 6. Create Storage Link
+```bash
+php artisan storage:link
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 7. Build Assets
+```bash
+npm run build
+# or for development
+npm run dev
+```
 
-## Security Vulnerabilities
+## Quick Setup (Alternative)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Use the automated setup script:
+```bash
+composer setup
+```
+
+This will:
+- Install all dependencies
+- Copy `.env.example` to `.env`
+- Generate application key
+- Run migrations
+- Install and build frontend assets
+
+## Running the Application
+
+### Development Mode
+Run all services concurrently (recommended):
+```bash
+composer dev
+```
+
+This starts:
+- Laravel development server (port 8000)
+- Queue worker
+- Log viewer (Pail)
+- Vite development server
+
+### Manual Mode
+Alternatively, run services separately:
+
+```bash
+# Start Laravel server
+php artisan serve
+
+# Start queue worker (in new terminal)
+php artisan queue:listen
+
+# Start Vite dev server (in new terminal)
+npm run dev
+```
+
+## Testing
+
+Run the test suite:
+```bash
+composer test
+# or
+php artisan test
+```
+
+## Common Artisan Commands
+
+```bash
+# Clear configuration cache
+php artisan config:clear
+
+# Cache configuration
+php artisan config:cache
+
+# View all routes
+php artisan route:list
+
+# Create a new controller
+php artisan make:controller ControllerName
+
+# Create a new model with migration
+php artisan make:model ModelName -m
+
+# Create seeder
+php artisan make:seeder SeederName
+
+# Run seeders
+php artisan db:seed
+```
+
+## Project Structure
+
+```
+app/
+├── Models/
+│   ├── Admin.php
+│   ├── Card.php
+│   ├── Category.php
+│   ├── Order.php
+│   ├── OrderAddress.php
+│   ├── OrderItem.php
+│   ├── Product.php
+│   ├── Profile.php
+│   ├── Store.php
+│   ├── Tag.php
+│   └── User.php
+└── ...
+```
+
+## Configuration
+
+### Pusher Setup (Real-time Features)
+Add your Pusher credentials to `.env`:
+```env
+BROADCAST_CONNECTION=pusher
+PUSHER_APP_ID=your_app_id
+PUSHER_APP_KEY=your_app_key
+PUSHER_APP_SECRET=your_app_secret
+PUSHER_APP_CLUSTER=your_cluster
+```
+
+### Queue Configuration
+Configure your queue connection in `.env`:
+```env
+QUEUE_CONNECTION=database
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
