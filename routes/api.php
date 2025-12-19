@@ -35,3 +35,5 @@ Route::post('/register', [RegesterUserController::class, 'register'])->middlewar
 Route::post('/logout', [LoginUserController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/admin/login', [LoginAdminController::class, 'loginAdmin'])->middleware('guest:sanctum');
 Route::post('/admin/register', [RegisterAdminController::class, 'register'])->middleware('guest:sanctum');
+Route::post('/admin/logout', [LoginAdminController::class, 'logoutAdmin'])->middleware('auth:sanctum');
+Route::post('/checkout', [App\Http\Controllers\Api\checkoutController::class, 'checkout']);
