@@ -9,7 +9,6 @@
 
 @section('content')
     <div class="mb-5">
-
         <a href="{{ route('dashpoard.products.create') }}" class="btn btn-sm btn-outline-primary">Create Product</a>
         <x-alert type="success" message="success" />
         <x-alert type="info" message="info" />
@@ -39,6 +38,7 @@
             </tr>
         </thead>
         <tbody>
+
             @forelse ($products as $product)
                 <tr>
                     <td><img src="{{ asset('storage/' . $product->image) }}" alt="" width="50" height="50"></td>
@@ -53,6 +53,7 @@
                             class="btn btn-sm btn-outline-success">Edit</a>
                     </td>
                     <td>
+
                         <form action="{{ route('dashpoard.products.destroy', $product->id) }}" method="post">
                             @csrf
                             @method('delete')

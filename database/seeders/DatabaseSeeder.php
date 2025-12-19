@@ -26,11 +26,14 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        // $this->call(UserSeeder::class);
-        // Store::factory(5)->create();
-        // Category::factory(10)->create();
-        // Product::factory(100)->create();
-        Admin::factory(3)->create();
+        $this->call(UserSeeder::class);
+        Store::factory(5)->create();
+        Category::factory(10)->create();
+        Product::factory(100)->create();
 
+        Admin::factory(3)->create();
+        $this->call(
+            RolesAndPermissionSeeder::class
+        );
     }
 }

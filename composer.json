@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.10.1",
         "mcamara/laravel-localization": "^2.3",
         "pusher/pusher-php-server": "^7.2",
+        "spatie/laravel-permission": "^6.24",
         "symfony/intl": "^7.3"
     },
     "require-dev": {

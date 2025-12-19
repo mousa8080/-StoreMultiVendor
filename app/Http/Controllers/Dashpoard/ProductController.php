@@ -17,6 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny',Product::class);
         $user = Auth::user();
         $products = Product::with('category', 'store')->paginate();
         $categories = Category::all();
@@ -28,6 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $this->authorize('create',Product::class);
         $categories = Category::all();
         $tags = Tag::all();
         $product = new Product();
@@ -39,6 +41,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create',Product::class);
         //
     }
 
@@ -52,6 +55,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $this->authorize('update',$product);
         $categories = Category::all();
         $tags = $product->tags;
         return view('dashpoard.products.edit', compact('product', 'categories', 'tags'));
@@ -62,6 +66,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $this->authorize('update',$product);
         $data = $request->except('tags');
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');
@@ -89,6 +94,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $this->authorize('delete',$product);
         $product->delete();
         return redirect()->route('dashpoard.products.index')->with('success', 'Product deleted successfully');
     }

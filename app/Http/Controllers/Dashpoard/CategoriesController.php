@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class CategoriesController extends Controller
 {
@@ -18,6 +19,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        if(!Gate::allows('category.view')){
+            abort(403);
+        }
+            
         // $categories = Category::paginate(2); //Return collection object //paginate difult 15 record.
         $request = request();
         // $query=Category::query();
@@ -67,6 +72,9 @@ class CategoriesController extends Controller
     public function create()
 
     {
+        if(Gate::denies('category.create')){
+            abort(403);
+        }
         $parents = Category::all(); //Return collection object
         $category = new Category();
 
@@ -78,6 +86,7 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('category.create');
         // $request->input('name');//url
         // $request->post('name');//post
         // $request->query('name');//url
@@ -132,6 +141,7 @@ class CategoriesController extends Controller
      */
     public function show(Category $category)
     {
+        Gate::authorize('category.view');
         $products = $category->products()->with('store')->paginate(5);
         return view('dashpoard.Categories.show', compact('category', 'products'));
     }
@@ -141,6 +151,7 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
+        
         try {
             $category = Category::findOrFail($id);
         } catch (Exception $e) {
@@ -162,6 +173,7 @@ class CategoriesController extends Controller
      */
     public function update(CategoryRequest $request, string $id)
     {
+       
 
         $category = Category::findOrFail($id);
         $old_image = $category->image; // Get the old image path from database
@@ -185,6 +197,7 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
+        Gate::authorize('category.delete');
         //========================= delete image 
         // $category = Category::findOrFail($id);
         $category->delete();

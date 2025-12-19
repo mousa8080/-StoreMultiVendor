@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie as Cookies;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,9 +24,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
-        Validator::extend('filter', function ($attribute, $value, $params) {
+        Gate::before(function ($user, $ability) {
+            if ($user->super_admin) {
+                return true;
+            }
+        });
 
+        foreach(config('abilits') as $code => $label){
+            Gate::define($code, function ($user) use ($code) {
+                return $user->hasAbilities($code);
+            });
+        }
+        
+       
+
+
+
+        Validator::extend('filter', function ($attribute, $value, $params) {
             return  !in_array(strtolower($value), $params);
         }, 'this name is forbidden!');
         Paginator::useBootstrap();

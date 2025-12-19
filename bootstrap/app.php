@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\UpdateUserActiveAt;
 use App\Http\Middleware\MarkNotificationAsRead;
 use App\Http\Middleware\CheckApiToken;
+use App\Http\Middleware\CheckPermission;
 use App\Http\Middleware\SetAppLocale;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -21,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             UpdateUserActiveAt::class,
             MarkNotificationAsRead::class,
             SetAppLocale::class,
+            
         ]);
         $middleware->alias([
             /**** OTHER MIDDLEWARE ALIASES ****/
@@ -29,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
             'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
             'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+            'permission'=>CheckPermission::class
         ]);
         $middleware->api([
             // CheckApiToken::class,

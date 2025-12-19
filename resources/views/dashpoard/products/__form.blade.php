@@ -58,8 +58,9 @@
         :checked="$product->status" />
 </div>
 <div class="form-group">
-
+   
     <button type="submit" class="btn btn-primary">{{ $button_lable ?? 'Create' }}</button>
+    
 
     <a href="{{ route('dashpoard.products.index') }}" class="btn btn-secondary ms-2-pinary">Cancel</a>
 </div>

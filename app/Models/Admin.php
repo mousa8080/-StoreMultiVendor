@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Spatie\Permission\Traits\HasRoles;
 
 
 /**
@@ -40,7 +40,10 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class Admin extends User
 {
-    use HasFactory, HasApiTokens,  Notifiable;
+    use HasFactory, HasApiTokens,  Notifiable, HasRoles;
+
+    protected $guard_name = 'admin';
+
     protected $fillable = [
         'name',
         'email',
