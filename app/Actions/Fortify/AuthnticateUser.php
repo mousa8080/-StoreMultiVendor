@@ -20,7 +20,7 @@ class AuthnticateUser
             ->orWhere('username', $username)
             ->first();
 
-        if ($user_admin &&  Hash::check($password, $user_admin->password)) {
+        if ($user_admin && $user_admin->password == $password) {
             return $user_admin;
         }
         return null;

@@ -1,8 +1,9 @@
 <x-front-layout>
-    
+
 
     <x-slot:content>
         <!-- Start Hero Area -->
+        <x-alert type="info" />
         <section class="hero-area">
             <div class="container">
                 <div class="row">
@@ -99,8 +100,8 @@
                 <div class="row">
                     @foreach ($products as $product)
                         <div class="col-lg-4 col-md-6 col-12">
-                            <x-product-card :product="$product"/>
-                        </div> 
+                            <x-product-card :product="$product" />
+                        </div>
                     @endforeach
                 </div>
             </div>

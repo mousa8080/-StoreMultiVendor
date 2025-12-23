@@ -8,6 +8,9 @@ use App\Http\Middleware\CheckUserType;
 use App\Http\Middleware\UpdateUserActiveAt;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashpoard\RolesController;
+use App\Http\Controllers\Dashpoard\ImportProductsController;
+
+
 
 
 
@@ -32,6 +35,8 @@ Route::group([
   Route::put('/categories/{category}/restore', [CategoriesController::class, 'restore'])->name('categories.restore');
   Route::delete('/categories/{category}/force-delete', [CategoriesController::class, 'forceDelete'])->name('categories.forceDelete');
 
+  Route::get('products/import', [ImportProductsController::class, 'create'])->name('products.import');
+  Route::post('products/import', [ImportProductsController::class, 'store']);
 
   Route::resources([
     '/roles' => RolesController::class,

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Repositories\card\CardRepositories;
+use App\Exceptions\InvalidOrderException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class CheckOutController extends Controller
     public function create(CardRepositories $card)
     {
         if ($card->get()->count() == 0) {
-            return redirect()->route('home');
+            throw new InvalidOrderException('No items in the cart');
         }
 
         return view('front.checkout', compact('card'));

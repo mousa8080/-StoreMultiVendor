@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Dashpoard;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ImportProducts;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
