@@ -65,6 +65,9 @@ class User extends Authenticatable //implements MustVerifyEmail
         'email',
         'password',
         'store_id',
+        'provider_id',
+        'provider',
+        'provider_token',
     ];
 
     /**
@@ -80,6 +83,8 @@ class User extends Authenticatable //implements MustVerifyEmail
         'email_verified_at',
         'password',
         'remember_token',
+        'provider_token',
+        
     ];
 
     /**
@@ -92,10 +97,19 @@ class User extends Authenticatable //implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'provider_token' => 'encrypted',
         ];
     }
     public function profile()
     {
         return $this->hasOne(Profile::class, 'user_id', 'id')->withDefault('enter your name');
+    }
+    public function getProviderTokenAttribute($value)
+    {
+        return decrypt($value);
+    }
+    public function setProviderTokenAttribute($value)
+    {
+        $this->attributes['provider_token'] = encrypt($value);
     }
 }

@@ -2,10 +2,10 @@
 
 return [
 
-    'cateoryes.view' => 'View Categories',
-    'cateoryes.create' => 'Create Categories',
-    'cateoryes.update' => 'Update Categories',
-    'cateoryes.delete' => 'Delete Categories',
+    'categories.view' => 'View Categories',
+    'categories.create' => 'Create Categories',
+    'categories.update' => 'Update Categories',
+    'categories.delete' => 'Delete Categories',
 
     'products.view' => 'View Products',
     'products.create' => 'Create Products',
