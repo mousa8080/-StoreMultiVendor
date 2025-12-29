@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny',Product::class);
+        // $this->authorize(ability: ability: ability: 'viewAny',Product::class);
         $user = Auth::user();
         $products = Product::with('category', 'store')->paginate();
         $categories = Category::all();
@@ -43,8 +43,31 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create',Product::class);
-        //
+        $request->validate([
+
+
+        ]);
+        $data=$request->except('tags');
+        $data['store_id'] = Auth::user()->store_id;
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('products', 'public');
+        }
+        $product = Product::create($data);
+        $tag_id = [];
+        $save_tags = Tag::all();
+        foreach ($save_tags as $tag) {
+            $tag_slug = STR::slug($tag);
+            $tag = $save_tags->where('slug', $tag_slug)->first();
+            if (!$tag) {
+                $tag = Tag::create([
+                    'name' => $tag_slug,
+                    'slug' => $tag_slug,
+                ]);
+            }
+            $tag_id[] = $tag->id;
+        }
+        $product->tags()->sync($tag_id);
+        return redirect()->route('dashpoard.products.index')->with('success', 'Product created successfully');
     }
 
     /**

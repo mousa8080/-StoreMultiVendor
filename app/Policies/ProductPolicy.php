@@ -17,9 +17,9 @@ class ProductPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny($user): bool
+    public function viewAny($user)
     {
-        return $user->hasAbilities('product.view');
+        // return $user->hasAbilities('product.view');
     }
 
     /**

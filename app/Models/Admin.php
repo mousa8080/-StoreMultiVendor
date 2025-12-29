@@ -53,4 +53,12 @@ class Admin extends User
         'status',
         'super_admin'
     ];
+
+    /**
+     * Get the store that this admin belongs to.
+     */
+    public function store()
+    {
+        return $this->belongsTo(Store::class, 'store_id', 'id');
+    }
 }

@@ -12,6 +12,9 @@ use App\Http\Controllers\Front\Auth\TowFactorAuthenticationController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\Front\PaymentController;
+
+
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -34,6 +37,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirectToProvider'])->name('auth.social.redirect');
 Route::get('auth/{provider}/callback', [SocialLoginController::class, 'handleProviderCallback'])->name('auth.social.callback');
 Route::get('auth/{provider}/user', [SocialController::class, 'index'])->name('auth.user.social');
+Route::get('payment/{order}/create', [PaymentController::class, 'create'])->name('order.payment.create');
+Route::post('payment/{order}/stripe-intent', [PaymentController::class, 'createStripePaymentIntent'])->name('order.payment.stripe.intent');
+Route::get('payment{order}/stripe/return', [PaymentController::class, 'confirm'])->name('stripe.return');
+
+
+
+Route::any('stripe/webhook', [\App\Http\Controllers\StripeWebhooksController::class, 'handle']);
 
 // require __DIR__ . '/auth.php';
 require __DIR__ . '/dashpoard.php';
